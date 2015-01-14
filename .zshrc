@@ -5,6 +5,7 @@
 # cdしたあとで、自動的に ls する
 function chpwd() { ls -1 }
 
+
 # cd-bookmark
 fpath=($HOME/.zsh/functions/cd-bookmark(N-/) $fpath)
 autoload -Uz cd-bookmark
@@ -101,7 +102,7 @@ background(){
   if [ "$1" = "-d" ];then
     bgcolor -d
     bgimage -d
-  fi  
+  fi
   if [ "$1" = "-r" ];then
     bgimage -r
     bgcolor -r

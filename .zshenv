@@ -52,6 +52,12 @@ setopt auto_pushd
 # ディレクトリ名を入力するだけでcdできるようにする
 setopt auto_cd
 
+# 同時に起動したzshの間でヒストリを共有する
+setopt share_history
+
+# 補完で小文字でも大文字にマッチさせる
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 # -------------------------------------
 # パス
 # -------------------------------------
@@ -80,9 +86,9 @@ eval "$(gulp --completion=zsh)"
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 
 # go
-export GOPATH=~/go
-export PATH=$PATH:$GOPATH/bin
-
+export GOROOT=`go env GOROOT`
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # autojump
 . /usr/local/etc/autojump.zsh
@@ -118,31 +124,64 @@ zstyle ":vcs_info:*" max-exports 6
 
 if is-at-least 4.3.10; then
     zstyle ":vcs_info:git:*" check-for-changes true # commitしていないのをチェック
-    zstyle ":vcs_info:git:*" stagedstr "<S>"
-    zstyle ":vcs_info:git:*" unstagedstr "<U>"
-    zstyle ":vcs_info:git:*" formats "(%b) %c%u"
+    zstyle ":vcs_info:git:*" stagedstr "S"
+    zstyle ":vcs_info:git:*" unstagedstr "U"
+    zstyle ":vcs_info:git:*" formats "%b %c%u"
     zstyle ":vcs_info:git:*" actionformats "(%s)-[%b|%a] %c%u"
 fi
 
 function vcs_prompt_info() {
     LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && echo -n " %{$fg[yellow]%}$vcs_info_msg_0_%f"
+    [[ -n "$vcs_info_msg_0_" ]] && echo -n " %{$fg[yellow]%}($vcs_info_msg_0_)%f"
 }
 # end VCS
 
-OK="（>ω <）"
-NG="（>A<）"
+OK="$ "
+NG="$ "
+_newline=$'\n'
+_lineup=$'\e[1A'
+_linedown=$'\e[1B'
 
 PROMPT=""
 PROMPT+="%(?.%F{green}$OK%f.%F{red}$NG%f) "
 PROMPT+="%F{blue}%~%f"
 PROMPT+="\$(vcs_prompt_info)"
-PROMPT+="
-"
-PROMPT+="%% "
+PROMPT+=${_newline}
 
-RPROMPT="[%*]"
+RPROMPT=%{${_lineup}%}
+RPROMPT+="%F{cyan}%*"
+RPROMPT+=%{${_linedown}%}
 
+SPROMPT="%{$fg[red]%}%{$suggest%} %B%r%b %{$fg[red]%}じゃね? [んだ(y), ちゃう(n)]:${reset_color} "
+
+# commands
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+ZSH_HIGHLIGHT_STYLES[default]=none
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
+ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=yellow
+ZSH_HIGHLIGHT_STYLES[alias]=fg=green
+ZSH_HIGHLIGHT_STYLES[builtin]=fg=green
+ZSH_HIGHLIGHT_STYLES[function]=fg=green
+ZSH_HIGHLIGHT_STYLES[command]=fg=green
+ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
+ZSH_HIGHLIGHT_STYLES[commandseparator]=none
+ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=green
+ZSH_HIGHLIGHT_STYLES[path]=underline
+ZSH_HIGHLIGHT_STYLES[path_prefix]=underline
+ZSH_HIGHLIGHT_STYLES[path_approx]=fg=yellow,underline
+ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue
+ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=white
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=white
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[assign]=none
 # -------------------------------------
 # エイリアス
 # -------------------------------------
@@ -199,4 +238,3 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^R' peco-select-history
-
