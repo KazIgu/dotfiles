@@ -32,6 +32,7 @@ brew install mysql
 brew install emacs
 brew install imagemagick
 brew install peco
+brew install gibo
 
 # --------------------
 # cask
