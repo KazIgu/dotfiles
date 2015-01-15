@@ -5,6 +5,10 @@
 # cdしたあとで、自動的に ls する
 function chpwd() { ls -1 }
 
+# giboをpecoと一緒に
+ggibo() {
+  gibo -l | peco | xargs gibo
+}
 
 # cd-bookmark
 fpath=($HOME/.zsh/functions/cd-bookmark(N-/) $fpath)
