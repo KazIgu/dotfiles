@@ -85,10 +85,8 @@ eval "$(gulp --completion=zsh)"
 # pythonbrew
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 
-# go
-export GOROOT=`go env GOROOT`
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+# gvm
+[[ -s "/Users/iguchikazuya/.gvm/scripts/gvm" ]] && source "/Users/iguchikazuya/.gvm/scripts/gvm"
 
 # autojump
 . /usr/local/etc/autojump.zsh
@@ -143,7 +141,7 @@ _lineup=$'\e[1A'
 _linedown=$'\e[1B'
 
 PROMPT=""
-PROMPT+="%(?.%F{green}$OK%f.%F{red}$NG%f) "
+PROMPT+="%(?.%F{cyan}$OK%f.%F{red}$NG%f) "
 PROMPT+="%F{blue}%~%f"
 PROMPT+="\$(vcs_prompt_info)"
 PROMPT+=${_newline}

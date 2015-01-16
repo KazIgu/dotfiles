@@ -23,7 +23,6 @@ brew install vim
 brew install wget
 brew install zsh
 brew install autojump
-brew install go
 brew install ruby-build
 brew install rbenv
 brew install nodebrew
