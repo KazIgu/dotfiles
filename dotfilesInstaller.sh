@@ -1,15 +1,15 @@
 # git
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/.gitignore ~/.gitignore
+ln -sfn ~/dotfiles/.gitconfig ~/.gitconfig
+ln -sfn ~/dotfiles/.gitignore ~/.gitignore
 
 # vim
-ln -s ~/dotfiles/.vim/ ~/.vim
-ln -s ~/dotfiles/.vimrc ~/.vimrc
+ln -sfn ~/dotfiles/.vim/ ~/.vim
+ln -sfn ~/dotfiles/.vimrc ~/.vimrc
 
 # zsh
-ln -s ~/dotfiles/.zsh/ ~/.zsh
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.zshenv ~/.zshenv
+ln -sfn ~/dotfiles/.zsh/ ~/.zsh
+ln -sfn ~/dotfiles/.zshrc ~/.zshrc
+ln -sfn ~/dotfiles/.zshenv ~/.zshenv
 
 # tmux
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+ln -sfn ~/dotfiles/.tmux.conf ~/.tmux.conf

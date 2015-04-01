@@ -16,6 +16,9 @@ export MANPAGER=/usr/bin/less
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home"
 
+# direnv
+echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+
 # -------------------------------------
 # zshのオプション
 # -------------------------------------
@@ -89,7 +92,7 @@ eval "$(gulp --completion=zsh)"
 [[ -s "/Users/iguchikazuya/.gvm/scripts/gvm" ]] && source "/Users/iguchikazuya/.gvm/scripts/gvm"
 
 # autojump
-. /usr/local/etc/autojump.zsh
+. $HOME/dotfiles/.zsh/functions/autojump.zsh
 
 # 重複する要素を自動的に削除
 typeset -U path cdpath fpath manpath
@@ -199,12 +202,18 @@ alias tns='tmux new-session -s'
 alias ta='tmux attach -t'
 alias tls='tmux ls'
 
+# tmuxinator
+alias mns='mux new'
+alias ma='mux'
+alias mls='mux list'
+
+
 # tree
 alias tree="tree -NC" # N: 文字化け対策, C:色をつける
 
 # sublime text
-alias st="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
-
+# alias st="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias st="/opt/homebrew-cask/Caskroom/sublime-text-dev/3071/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 # -------------------------------------
 # キーバインド
 # -------------------------------------
